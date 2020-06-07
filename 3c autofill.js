@@ -197,14 +197,21 @@ function autofill3C() {
 
 // eXchange spesifikk
 function autofilleXchange() {
+	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
+
 	scServicenummer = document.getElementById("OrderNumber");
 	scServicenummer.value = mabData["servicenummer"];
 
 	var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
-	var scProduktgruppe = document.getElementById("sObjectNameSinet");
-	var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
+	scMerke.value = 133;
+
+	// produktgruppe, skal lage noen predefined oversettelser fra mab
+	// var scProduktgruppe = document.getElementById("sObjectNameSinet");
+	//var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
+
 	var scLeverandør = document.getElementById("sSupplierSinet"); //(Sony norge er value 2247)
-	
+	scLeverandør = 2247;
+
 	var scNavn = document.getElementById("ServiceOwner");
 	scNavn.value = mabData["fornavn"] + " " + mabData["etternavn"];
 
