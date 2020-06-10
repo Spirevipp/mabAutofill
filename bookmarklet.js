@@ -10,7 +10,7 @@ set mabAutofillScript as javascript sourcefile
 runscript()
 */
 
-var loadJS = function(url, implementationCode, location){
+var loadJS = function (url, implementationCode, location) {
     //url is URL of external file, implementationCode is the code
     //to be called from the file, location is the location to 
     //insert the <script> element
@@ -23,7 +23,9 @@ var loadJS = function(url, implementationCode, location){
 
     location.appendChild(scriptTag);
 };
-var yourCodeToBeCalled = function(){
-//your code goes here
+var runMabScript = function () {
+    //your code goes here
+    //mabAutofill();
+    alert("hello world!");
 }
-loadJS('yourcode.js', yourCodeToBeCalled, document.body);
+loadJS('https://raw.githubusercontent.com/Spirevipp/mabAutofill/master/mabAutofill.js', runMabScript, document.body);

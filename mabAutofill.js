@@ -15,48 +15,48 @@ function fiksFormattering(s) {
 	return s;
 }
 
-// Definer alle variabler brukt i funksjoner
-var scModel;
-var scSerial;
-var scDato;
-var scButikkref;
-var scFornavn;
-var scEtternavn;
-var scAdresse;
-var scPostnummer;
-var scPoststed;
-var scEpost;
-var scTlf1;
-var scTlf2;
-var scServicenummer;
-var scFeilbeskrivelse;
+function mabAutofill() {
+	// Definer alle variabler brukt i funksjoner
+	var scModel;
+	var scSerial;
+	var scDato;
+	var scButikkref;
+	var scFornavn;
+	var scEtternavn;
+	var scAdresse;
+	var scPostnummer;
+	var scPoststed;
+	var scEpost;
+	var scTlf1;
+	var scTlf2;
+	var scServicenummer;
+	var scFeilbeskrivelse;
 
-// finn ut hvilken side scriptet kjøres på
-var currentURL = document.URL;
-console.log(currentURL);
-var mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
-console.log(mabData);
+	// finn ut hvilken side scriptet kjøres på
+	var currentURL = document.URL;
+	console.log(currentURL);
+	var mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
+	console.log(mabData);
 
-// lag en array med array for alle elementer i mabData
-var tempObj = Object.entries(mabData);
-console.log(tempObj);
+	// lag en array med array for alle elementer i mabData
+	var tempObj = Object.entries(mabData);
+	console.log(tempObj);
 
-// iterer over array og mabdata for å bytte ut feilformaterte æøå
-for (i = 0; i < tempObj.length; i++) {
-	console.log(tempObj[i]);
-	mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
-}
-console.log(mabData);
+	// iterer over array og mabdata for å bytte ut feilformaterte æøå
+	for (i = 0; i < tempObj.length; i++) {
+		console.log(tempObj[i]);
+		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
+	}
+	console.log(mabData);
 
 
-if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-	autofilleXchange();
-}
-else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
-	autofill3C();
-}
-else {
-	alert("Ugyldig nettside, funker kun i 3cgui service registrering og eXchange registrering");
+	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
+		autofilleXchange();
+	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
+		autofill3C();
+	} else {
+		alert("Ugyldig nettside, funker kun i 3cgui service registrering og eXchange registrering");
+	}
 }
 
 // MAB -> 3C spesifikke ting
