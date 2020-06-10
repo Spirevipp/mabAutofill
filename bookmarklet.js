@@ -28,4 +28,4 @@ var runMabScript = function () {
     //mabAutofill();
     alert("hello world!");
 }
-loadJS('https://raw.githubusercontent.com/Spirevipp/mabAutofill/master/mabAutofill.js', runMabScript, document.body);
+loadJS('https://spirevipp.github.io/mabAutofill/mabAutofill.js', runMabScript, document.body);
