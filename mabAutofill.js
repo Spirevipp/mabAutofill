@@ -16,114 +16,100 @@ function fiksFormattering(s) {
 }
 
 function mabAutofill() {
-	// Definer alle variabler brukt i funksjoner
-	var scModel;
-	var scSerial;
-	var scDato;
-	var scButikkref;
-	var scFornavn;
-	var scEtternavn;
-	var scAdresse;
-	var scPostnummer;
-	var scPoststed;
-	var scEpost;
-	var scTlf1;
-	var scTlf2;
-	var scServicenummer;
-	var scFeilbeskrivelse;
 
 	// finn ut hvilken side scriptet kjøres på
 	var currentURL = document.URL;
 	console.log(currentURL);
-	window.mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
-	console.log(window.mabData);
+	mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
+	console.log(mabData);
 
 	// lag en array med array for alle elementer i mabData
-	var tempObj = Object.entries(window.mabData);
+	var tempObj = Object.entries(mabData);
 	console.log(tempObj);
 
 	// iterer over array og mabdata for å bytte ut feilformaterte æøå
 	for (i = 0; i < tempObj.length; i++) {
 		console.log(tempObj[i]);
-		window.mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
+		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
 	}
-	console.log(window.mabData);
+	console.log(mabData);
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		autofilleXchange();
+		autofilleXchange(mabData);
 	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
-		autofill3C();
+		autofill3C(mabData);
 	} else {
 		alert("Ugyldig nettside, funker kun i 3cgui service registrering og eXchange registrering");
 	}
 }
 
 // MAB -> 3C spesifikke ting
-function autofill3C() {
+function autofill3C(d) {
+	var dataInput = d;
 	// reverser dato rekkefølge
-	var tmpVar = window.mabData["dato"];
+	var tmpVar = dataInput["dato"];
 	tmpVar = tmpVar.split(".");
-	mabData["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
+	dataInput["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
 
 	// Sjekke om enkelte felt er tomme, og fylle ut med placeholder
 	// Sjekker tlf, adresse, postnr, poststed, epost, serienummer, navn
 	// navn blir også flyttet og korrigert hvis det er butikk
 	// serienummer sjekker om det er XXXXXXX, NA, eller tom, og markerer no serial boksen om mulig
 	// hvis ingen epost blir no email knapp valgt
-	if (mabData["tlf"] == "") {
-		mabData["tlf"] = "99999999";
+	if (dataInput["tlf"] == "") {
+		dataInput["tlf"] = "99999999";
 	}
 	var noEmail = false;
-	if (mabData["epost"] == "") {
+	if (dataInput["epost"] == "") {
 		noEmail = true;
 	}
-	if (mabData["adresse"] == "") {
-		mabData["adresse"] = ".";
+	if (dataInput["adresse"] == "") {
+		dataInput["adresse"] = ".";
 	}
-	if (mabData["postnummer"] == "") {
-		mabData["postnummer"] = "0000";
+	if (dataInput["postnummer"] == "") {
+		dataInput["postnummer"] = "0000";
 	}
-	if (mabData["poststed"] == "") {
-		mabData["poststed"] = "."
+	if (dataInput["poststed"] == "") {
+		dataInput["poststed"] = "."
 	}
-	if (mabData["fornavn"] == "" && mabData["etternavn"] != "") {
-		mabData["fornavn"] = mabData["etternavn"];
-		mabData["etternavn"] = ".";
-	} else if (mabData["fornavn"] == "" && mabData["etternavn"] == "") { // Skal aldri skje, men why not
-		mabData["fornavn"] = ".";
-		mabData["etternavn"] = ".";
-	} else if (mabData["fornavn"] != "" && mabData["etternavn"] == "") { // Skal aldri skje, men why not
-		mabData["etternavn"] = ".";
+	if (dataInput["fornavn"] == "" && dataInput["etternavn"] != "") {
+		dataInput["fornavn"] = dataInput["etternavn"];
+		dataInput["etternavn"] = ".";
+	} else if (dataInput["fornavn"] == "" && dataInput["etternavn"] == "") { // Skal aldri skje, men why not
+		dataInput["fornavn"] = ".";
+		dataInput["etternavn"] = ".";
+	} else if (dataInput["fornavn"] != "" && dataInput["etternavn"] == "") { // Skal aldri skje, men why not
+		dataInput["etternavn"] = ".";
 	}
 	var noSN = false;
-	if (mabData["serial"] == "" || mabData["serial"] == "NA" || mabData["serial"] == "XXXXXXX") {
+	if (dataInput["serial"] == "" || dataInput["serial"] == "NA" || dataInput["serial"] == "XXXXXXX") {
 		noSN = true;
 	}
-	console.log(mabData);
+	console.log(dataInput);
 
 
 
 	// fylle ut feltene i 3C
 
 	//modell
-	scModel = document.querySelectorAll("input[data-bind=\"css: inputClass, textInput: term\"]");
-	scModel[0].value = mabData["model"];
+	var scModel = document.querySelectorAll("input[data-bind=\"css: inputClass, textInput: term\"]");
+	scModel[0].value = dataInput["model"];
 	console.log(scModel);
 	scModel[0].dispatchEvent(new Event('input', {
 		bubbles: true
 	}));
 
 	//serienummer
-	scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
-	scSerial[0].value = mabData["serial"];
+	var scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
+	scSerial[0].value = dataInput["serial"];
 	console.log(scSerial);
 	//scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Tab'}));
 
 	//kjøpsdato
 
-	scDato = document.querySelectorAll("input[data-bind=\"date: purchaseDate, format: 'YYYY/MM/DD'\"]");
-	scDato[0].value = mabData["dato"];
+	var scDato = document.querySelectorAll("input[data-bind=\"date: purchaseDate, format: 'YYYY/MM/DD'\"]");
+	scDato[0].value = dataInput["dato"];
 	console.log(scDato);
 	//scDato[0].dispatchEvent(new Event('input', {bubbles: true}));
 
@@ -145,16 +131,16 @@ function autofill3C() {
 
 
 	//butikkreferanse
-	scButikkref = document.querySelectorAll("input[data-bind=\"value: reference\"]");
-	scButikkref[0].value = mabData["butikkref"];
+	var scButikkref = document.querySelectorAll("input[data-bind=\"value: reference\"]");
+	scButikkref[0].value = dataInput["butikkref"];
 
 	//fornavn
-	scFornavn = document.querySelectorAll("input[data-bind=\"value: firstName\"]");
-	scFornavn[0].value = mabData["fornavn"];
+	var scFornavn = document.querySelectorAll("input[data-bind=\"value: firstName\"]");
+	scFornavn[0].value = dataInput["fornavn"];
 
 	//etternavn
-	scEtternavn = document.querySelectorAll("input[data-bind=\"value: lastName\"]");
-	scEtternavn[0].value = mabData["etternavn"];
+	var scEtternavn = document.querySelectorAll("input[data-bind=\"value: lastName\"]");
+	scEtternavn[0].value = dataInput["etternavn"];
 
 	//språk, må settes til verdien "NO"
 	/* CSS targeter:
@@ -172,39 +158,40 @@ function autofill3C() {
 	*/
 
 	//adresse
-	scAdresse = document.querySelectorAll("input[data-bind=\"value: address().address1\"]");
-	scAdresse[0].value = mabData["adresse"];
+	var scAdresse = document.querySelectorAll("input[data-bind=\"value: address().address1\"]");
+	scAdresse[0].value = dataInput["adresse"];
 
 	//postnummer
-	scPostnummer = document.querySelectorAll("input[data-bind=\"value: address().zipCode\"]");
-	scPostnummer[0].value = mabData["postnummer"];
+	var scPostnummer = document.querySelectorAll("input[data-bind=\"value: address().zipCode\"]");
+	scPostnummer[0].value = dataInput["postnummer"];
 
 	//poststed
-	scPoststed = document.querySelectorAll("input[data-bind=\"value: address().city\"]");
-	scPoststed[0].value = mabData["poststed"];
+	var scPoststed = document.querySelectorAll("input[data-bind=\"value: address().city\"]");
+	scPoststed[0].value = dataInput["poststed"];
 
 	//epost
-	scEpost = document.querySelectorAll("input[data-bind=\"disable: noemail(), value: email, tooltip: 'formatTooltips.email'\"]");
-	scEpost[0].value = mabData["epost"];
+	var scEpost = document.querySelectorAll("input[data-bind=\"disable: noemail(), value: email, tooltip: 'formatTooltips.email'\"]");
+	scEpost[0].value = dataInput["epost"];
 
 	//tlf nummer, begge skal være lik og begynne med 0047
-	scTlf1 = document.querySelectorAll("input[data-bind=\"textInput: phone().fixed\"]");
-	scTlf1[0].value = "0047" + mabData["tlf"];
-	scTlf2 = document.querySelectorAll("input[data-bind=\"textInput: phone().mobile\"]");
-	scTlf2[0].value = "0047" + mabData["tlf"];
+	var scTlf1 = document.querySelectorAll("input[data-bind=\"textInput: phone().fixed\"]");
+	scTlf1[0].value = "0047" + dataInput["tlf"];
+	var scTlf2 = document.querySelectorAll("input[data-bind=\"textInput: phone().mobile\"]");
+	scTlf2[0].value = "0047" + dataInput["tlf"];
 
 	//servicenummer
-	scServicenummer = document.querySelectorAll("input[data-bind=\"value: rAscCaseId, tooltip: 'formatTooltips.rAscCaseId'\"]");
-	scServicenummer[0].value = mabData["servicenummer"];
+	var scServicenummer = document.querySelectorAll("input[data-bind=\"value: rAscCaseId, tooltip: 'formatTooltips.rAscCaseId'\"]");
+	scServicenummer[0].value = dataInput["servicenummer"];
 
 	//feilbeskrivelse
 
-	scFeilbeskrivelse = document.querySelectorAll("textarea");
-	scFeilbeskrivelse[0].value = mabData["feilbeskrivelse"];
+	var scFeilbeskrivelse = document.querySelectorAll("textarea");
+	scFeilbeskrivelse[0].value = dataInput["feilbeskrivelse"];
 }
 
 // eXchange spesifikk
-function autofilleXchange() {
+function autofilleXchange(d) {
+	var dataInput = d;
 	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
 
 	/*
@@ -223,26 +210,26 @@ function autofilleXchange() {
 	*/
 
 	var scNavn = document.getElementById("ServiceOwner");
-	scNavn.value = mabData["fornavn"] + " " + mabData["etternavn"];
+	scNavn.value = dataInput["fornavn"] + " " + dataInput["etternavn"];
 
-	scTlf1 = document.getElementById("ServiceLocationPhone");
-	scTlf1.value = mabData["tlf"];
+	var scTlf = document.getElementById("ServiceLocationPhone");
+	scTlf.value = dataInput["tlf"];
 
-	scAdresse = document.getElementById("ServiceAddress");
-	scAdresse.value = mabData["adresse"];
+	var scAdresse = document.getElementById("ServiceAddress");
+	scAdresse.value = dataInput["adresse"];
 
-	scPostnummer = document.getElementById("ServicePostalCode");
-	scPostnummer.value = mabData["postnummer"];
+	var scPostnummer = document.getElementById("ServicePostalCode");
+	scPostnummer.value = dataInput["postnummer"];
 
-	scPoststed = document.getElementById("ServicePostalTown");
-	scPoststed.value = mabData["poststed"];
+	var scPoststed = document.getElementById("ServicePostalTown");
+	scPoststed.value = dataInput["poststed"];
 
-	scEpost = document.getElementById("ServiceLocationEmail");
-	scEpost.value = mabData["epost"];
+	var scEpost = document.getElementById("ServiceLocationEmail");
+	scEpost.value = dataInput["epost"];
 
-	scSerial = document.getElementById("SerialNumber");
-	scSerial.value = mabData["serial"];
+	var scSerial = document.getElementById("SerialNumber");
+	scSerial.value = dataInput["serial"];
 
-	scFeilbeskrivelse = document.getElementById("CustFaultDescription");
-	scFeilbeskrivelse.value = mabData["feilbeskrivelse"];
+	var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
+	scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
 }
