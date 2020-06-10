@@ -35,19 +35,19 @@ function mabAutofill() {
 	// finn ut hvilken side scriptet kjøres på
 	var currentURL = document.URL;
 	console.log(currentURL);
-	var mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
-	console.log(mabData);
+	window.mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
+	console.log(window.mabData);
 
 	// lag en array med array for alle elementer i mabData
-	var tempObj = Object.entries(mabData);
+	var tempObj = Object.entries(window.mabData);
 	console.log(tempObj);
 
 	// iterer over array og mabdata for å bytte ut feilformaterte æøå
 	for (i = 0; i < tempObj.length; i++) {
 		console.log(tempObj[i]);
-		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
+		window.mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
 	}
-	console.log(mabData);
+	console.log(window.mabData);
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
@@ -62,7 +62,7 @@ function mabAutofill() {
 // MAB -> 3C spesifikke ting
 function autofill3C() {
 	// reverser dato rekkefølge
-	var tmpVar = mabData["dato"];
+	var tmpVar = window.mabData["dato"];
 	tmpVar = tmpVar.split(".");
 	mabData["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
 

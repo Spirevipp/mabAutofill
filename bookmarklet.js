@@ -25,7 +25,7 @@ var loadJS = function (url, implementationCode, location) {
 };
 var runMabScript = function () {
     //your code goes here
-    //mabAutofill();
-    alert("hello world!");
+    mabAutofill();
+    //alert("hello world!");
 }
-loadJS('https://spirevipp.github.io/mabAutofill/mabAutofill.js', runMabScript, document.body);
+loadJS('https://cdn.jsdelivr.net/gh/Spirevipp/mabAutofill@master/mabAutofill.js', runMabScript, document.body);
