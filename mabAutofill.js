@@ -113,6 +113,8 @@ var autofill3C = function (d) {
 
 	//serienummer
 	var scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
+	scSerial[0].focus();
+	scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Space'}));
 	scSerial[0].value = dataInput["serial"];
 	//console.log(scSerial);
 	//scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Tab'}));

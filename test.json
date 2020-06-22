@@ -1,0 +1,15 @@
+{
+    "model":"WF1000XM3", 
+    "serial":"5554555", 
+    "dato":"30.11.2019", 
+    "butikkref":"9988-554YO", 
+    "fornavn":"Ola", 
+    "etternavn":"Nordmann", 
+    "adresse":"Norgeveien 23", 
+    "postnummer":"0123", 
+    "poststed":"Oslo", 
+    "epost":"ola.nordmann@test.test", 
+    "tlf":"99988877", 
+    "servicenummer":"123321",
+    "feilbeskrivelse":"Dette er en kort feilbeskrivelse"
+    }
