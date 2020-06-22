@@ -46,7 +46,8 @@ function mabAutofill() {
 
 function tabFocus(h){
 	document.activeElement.value = h;
-
+	console.log(h);
+	console.log(document.activeElement);
 }
 
 // MAB -> 3C spesifikke ting
@@ -110,7 +111,7 @@ var autofill3C = function (d) {
 
 	//modell
 	var scModel = document.querySelectorAll("input[data-bind=\"css: inputClass, textInput: term\"]");
-	scModel[0].addEventListener("focus", tabFocus(dataInput["model"]), true);
+	scModel[0].addEventListener("onFocus", tabFocus(dataInput["model"]), true);
 
 	//serienummer
 	var scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
