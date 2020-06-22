@@ -19,20 +19,20 @@ function mabAutofill() {
 
 	// finn ut hvilken side scriptet kjøres på
 	var currentURL = document.URL;
-	console.log(currentURL);
+	//console.log(currentURL);
 	mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
-	console.log(mabData);
+	//console.log(mabData);
 
 	// lag en array med array for alle elementer i mabData
 	var tempObj = Object.entries(mabData);
-	console.log(tempObj);
+	//console.log(tempObj);
 
 	// iterer over array og mabdata for å bytte ut feilformaterte æøå
 	for (i = 0; i < tempObj.length; i++) {
-		console.log(tempObj[i]);
+		//console.log(tempObj[i]);
 		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
 	}
-	console.log(mabData);
+	//console.log(mabData);
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
@@ -46,7 +46,7 @@ function mabAutofill() {
 
 // MAB -> 3C spesifikke ting
 var autofill3C = function (d) {
-	console.log(d);
+	//console.log(d);
 	var dataInput = d;
 
 
@@ -97,7 +97,7 @@ var autofill3C = function (d) {
 	var tmpVar = dataInput["dato"];
 	tmpVar = tmpVar.split(".");
 	dataInput["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
-	console.log(dataInput);
+	//console.log(dataInput);
 
 
 
@@ -106,7 +106,7 @@ var autofill3C = function (d) {
 	//modell
 	var scModel = document.querySelectorAll("input[data-bind=\"css: inputClass, textInput: term\"]");
 	scModel[0].value = dataInput["model"];
-	console.log(scModel);
+	//console.log(scModel);
 	scModel[0].dispatchEvent(new Event('input', {
 		bubbles: true
 	}));
@@ -114,14 +114,14 @@ var autofill3C = function (d) {
 	//serienummer
 	var scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
 	scSerial[0].value = dataInput["serial"];
-	console.log(scSerial);
+	//console.log(scSerial);
 	//scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Tab'}));
 
 	//kjøpsdato
 
 	var scDato = document.querySelectorAll("input[data-bind=\"date: purchaseDate, format: 'YYYY/MM/DD'\"]");
 	scDato[0].value = dataInput["dato"];
-	console.log(scDato);
+	//console.log(scDato);
 	//scDato[0].dispatchEvent(new Event('input', {bubbles: true}));
 
 
