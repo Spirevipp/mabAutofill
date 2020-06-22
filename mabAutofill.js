@@ -36,7 +36,7 @@ function mabAutofill() {
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		autofilleXchange(mabData);
+		loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', autofilleXchange(mabData), document.body);
 	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
 		autofill3C(mabData);
 	} else {
@@ -45,12 +45,10 @@ function mabAutofill() {
 }
 
 // MAB -> 3C spesifikke ting
-function autofill3C(d) {
+var autofill3C = function (d) {
+	console.log(d);
 	var dataInput = d;
-	// reverser dato rekkefølge
-	var tmpVar = dataInput["dato"];
-	tmpVar = tmpVar.split(".");
-	dataInput["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
+
 
 	// Sjekke om enkelte felt er tomme, og fylle ut med placeholder
 	// Sjekker tlf, adresse, postnr, poststed, epost, serienummer, navn
@@ -86,6 +84,19 @@ function autofill3C(d) {
 	if (dataInput["serial"] == "" || dataInput["serial"] == "NA" || dataInput["serial"] == "XXXXXXX") {
 		noSN = true;
 	}
+	if (dataInput["dato"] == "") {
+		let today = new Date();
+		let dd = String(today.getDate()).padStart(2, '0');
+		let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+		let yyyy = today.getFullYear();
+
+		today = yyyy + '/' + mm + '/' + dd;
+		dataInput["dato"] = today;
+	}
+	// reverser dato rekkefølge
+	var tmpVar = dataInput["dato"];
+	tmpVar = tmpVar.split(".");
+	dataInput["dato"] = tmpVar[2].concat("/", tmpVar[1], "/", tmpVar[0]);
 	console.log(dataInput);
 
 
@@ -190,8 +201,10 @@ function autofill3C(d) {
 }
 
 // eXchange spesifikk
-function autofilleXchange(d) {
+var autofilleXchange = function (d) {
 	var dataInput = d;
+
+
 	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
 
 	/*
@@ -226,6 +239,12 @@ function autofilleXchange(d) {
 
 	var scEpost = document.getElementById("ServiceLocationEmail");
 	scEpost.value = dataInput["epost"];
+
+	if (dataInput["rev"] == "") {
+		dataInput["rev"] = "Default";
+	};
+	var scModel = document.getElementById("ModelCode");
+	scModel.value = geteXchangeModel(dataInput["model"], dataInput["rev"]);
 
 	var scSerial = document.getElementById("SerialNumber");
 	scSerial.value = dataInput["serial"];
