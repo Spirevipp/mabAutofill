@@ -14,7 +14,7 @@ function fiksFormattering(s) {
 	}
 	return s;
 }
-
+/*
 var loadJS = function (url, implementationCode, location) {
     var scriptTag = document.createElement('script');
     scriptTag.src = url;
@@ -24,6 +24,7 @@ var loadJS = function (url, implementationCode, location) {
 
     location.appendChild(scriptTag);
 };
+*/
 
 function mabAutofill() {
 
@@ -46,7 +47,7 @@ function mabAutofill() {
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', autofilleXchange(mabData), document.body);
+		window.top.loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', windows.top.autofilleXchange(mabData), document.body);
 	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
 		autofill3C(mabData);
 	} else {
@@ -219,6 +220,7 @@ var autofilleXchange = function (d) {
 		dataInput["rev"] = "Default";
 	};
 	dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
+	
 
 
 	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
