@@ -47,7 +47,7 @@ function mabAutofill() {
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		window.top.loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', windows.top.autofilleXchange(mabData), document.body);
+		window.top.loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', window.top.autofilleXchange(mabData), document.body);
 	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
 		autofill3C(mabData);
 	} else {
