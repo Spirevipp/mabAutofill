@@ -15,6 +15,16 @@ function fiksFormattering(s) {
 	return s;
 }
 
+var loadJS = function (url, implementationCode, location) {
+    var scriptTag = document.createElement('script');
+    scriptTag.src = url;
+
+    scriptTag.onload = implementationCode;
+    scriptTag.onreadystatechange = implementationCode;
+
+    location.appendChild(scriptTag);
+};
+
 function mabAutofill() {
 
 	// finn ut hvilken side scriptet kjøres på
@@ -205,6 +215,10 @@ var autofill3C = function (d) {
 // eXchange spesifikk
 var autofilleXchange = function (d) {
 	var dataInput = d;
+	if (dataInput["rev"] == "") {
+		dataInput["rev"] = "Default";
+	};
+	dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
 
 
 	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
@@ -242,11 +256,9 @@ var autofilleXchange = function (d) {
 	var scEpost = document.getElementById("ServiceLocationEmail");
 	scEpost.value = dataInput["epost"];
 
-	if (dataInput["rev"] == "") {
-		dataInput["rev"] = "Default";
-	};
+	
 	var scModel = document.getElementById("ModelCode");
-	scModel.value = geteXchangeModel(dataInput["model"], dataInput["rev"]);
+	scModel.value = dataInput["model"];
 
 	var scSerial = document.getElementById("SerialNumber");
 	scSerial.value = dataInput["serial"];

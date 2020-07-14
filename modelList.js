@@ -3,7 +3,7 @@ function geteXchangeModel(m, c) {
     // c = det som blir skrevet i "Revisjon" feltet i MAB
     // m og c skal alltid ha en verdi, fikses før denne fuksjonen blir kalt
     // hvis "Revisjon" feltet er tomt skal c være "Default"
-    var correctModel = modelList[m][c];
+    var correctModel = modelList[m][c] || m;
     return correctModel;
 }
 
