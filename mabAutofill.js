@@ -219,7 +219,7 @@ var autofilleXchange = function (d) {
 	if (dataInput["rev"] == "") {
 		dataInput["rev"] = "Default";
 	};
-	dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
+	dataInput["model"] = window.top.geteXchangeModel(dataInput["model"], dataInput["rev"]);
 	
 
 
