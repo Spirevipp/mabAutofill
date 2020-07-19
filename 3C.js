@@ -19,35 +19,17 @@ function fiksFormattering(s) {
 
 function mabAutofill() {
 
-	// finn ut hvilken side scriptet kjøres på
-	var currentURL = document.URL;
-	//console.log(currentURL);
-	mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
-	//console.log(mabData);
-
+	// hent mabdata via lim inn i popup + alt+f10 i mab
 	// lag en array med array for alle elementer i mabData
+	mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
 	var tempObj = Object.entries(mabData);
-	//console.log(tempObj);
 
 	// iterer over array og mabdata for å bytte ut feilformaterte æøå
 	for (i = 0; i < tempObj.length; i++) {
-		//console.log(tempObj[i]);
 		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
 	}
-	//console.log(mabData);
 
-
-	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		window.top.loadJS('https://spirevipp.github.io/mabAutofill/eXchange.js', runeXchange(mabData), document.body);
-	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
-		autofill3C(mabData);
-	} else {
-		alert("Ugyldig nettside, funker kun i 3cgui service registrering og eXchange registrering");
-	}
-}
-
-var runeXchange = function (d) {
-    autofilleXchange(d);
+	autofilleXchange(mabData);
 }
 
 // MAB -> 3C spesifikke ting
@@ -120,7 +102,9 @@ var autofill3C = function (d) {
 	//serienummer
 	var scSerial = document.querySelectorAll("input[data-bind=\"value: serial\"]");
 	scSerial[0].focus();
-	scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Space'}));
+	scSerial[0].dispatchEvent(new KeyboardEvent('keydown', {
+		'key': 'Space'
+	}));
 	scSerial[0].value = dataInput["serial"];
 	//console.log(scSerial);
 	//scSerial[0].dispatchEvent(new KeyboardEvent('keydown',{'key':'Tab'}));

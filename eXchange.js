@@ -1,4 +1,36 @@
-console.log("hello world!");
+function fiksFormattering(s) {
+    // bytter ut alle feilformaterte æøå i input string s
+    var re = [/Ã¦/g, /Ã¸/g, /Ã¥/g, /Ã†/g, /Ã˜/g, /Ã…/g, /Ã¶/g, /Ã¤/g, /Ã©/g];
+    var rep = ["æ", "ø", "å", "Æ", "Ø", "Å", "ö", "ä", "é"];
+    //console.log(s);
+    for (var i = 0; i < re.length; i++) {
+        //regex match alle formater i re array og bytt ut med bokstav på tilsvarende posisjon i rep array
+        var prevS = s;
+        s = s.replace(re[i], rep[i]);
+        /*
+        if (prevS != s) {
+        	console.log(re[i], rep[i]);
+        	console.log(s);
+        }
+        */
+    }
+    return s;
+}
+
+function mabAutofill() {
+
+    // hent mabdata via lim inn i popup + alt+f10 i mab
+    // lag en array med array for alle elementer i mabData
+    mabData = JSON.parse(prompt("Lim inn data fra MAB", ""));
+    var tempObj = Object.entries(mabData);
+
+    // iterer over array og mabdata for å bytte ut feilformaterte æøå
+    for (i = 0; i < tempObj.length; i++) {
+        mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
+    }
+
+    autofilleXchange(mabData);
+}
 
 var geteXchangeModel = function (m, c) {
     // m = modell
@@ -10,57 +42,57 @@ var geteXchangeModel = function (m, c) {
 }
 
 var autofilleXchange = function (d) {
-	var dataInput = d;
-	if (dataInput["rev"] == "") {
-		dataInput["rev"] = "Default";
-	};
-	dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
-	
+    var dataInput = d;
+    if (dataInput["rev"] == "") {
+        dataInput["rev"] = "Default";
+    };
+    dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
 
 
-	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
 
-	/*
-	scServicenummer = document.getElementById("OrderNumber");
-	scServicenummer.value = mabData["servicenummer"];
+    //funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
 
-	var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
-	scMerke.value = 133;
+    /*
+    scServicenummer = document.getElementById("OrderNumber");
+    scServicenummer.value = mabData["servicenummer"];
 
-	// produktgruppe, skal lage noen predefined oversettelser fra mab
-	// var scProduktgruppe = document.getElementById("sObjectNameSinet");
-	//var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
+    var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
+    scMerke.value = 133;
 
-	var scLeverandør = document.getElementById("sSupplierSinet"); //(Sony norge er value 2247)
-	scLeverandør = 2247;
-	*/
+    // produktgruppe, skal lage noen predefined oversettelser fra mab
+    // var scProduktgruppe = document.getElementById("sObjectNameSinet");
+    //var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
 
-	var scNavn = document.getElementById("ServiceOwner");
-	scNavn.value = dataInput["fornavn"] + " " + dataInput["etternavn"];
+    var scLeverandør = document.getElementById("sSupplierSinet"); //(Sony norge er value 2247)
+    scLeverandør = 2247;
+    */
 
-	var scTlf = document.getElementById("ServiceLocationPhone");
-	scTlf.value = dataInput["tlf"];
+    var scNavn = document.getElementById("ServiceOwner");
+    scNavn.value = dataInput["fornavn"] + " " + dataInput["etternavn"];
 
-	var scAdresse = document.getElementById("ServiceAddress");
-	scAdresse.value = dataInput["adresse"];
+    var scTlf = document.getElementById("ServiceLocationPhone");
+    scTlf.value = dataInput["tlf"];
 
-	var scPostnummer = document.getElementById("ServicePostalCode");
-	scPostnummer.value = dataInput["postnummer"];
+    var scAdresse = document.getElementById("ServiceAddress");
+    scAdresse.value = dataInput["adresse"];
 
-	var scPoststed = document.getElementById("ServicePostalTown");
-	scPoststed.value = dataInput["poststed"];
+    var scPostnummer = document.getElementById("ServicePostalCode");
+    scPostnummer.value = dataInput["postnummer"];
 
-	var scEpost = document.getElementById("ServiceLocationEmail");
-	scEpost.value = dataInput["epost"];
+    var scPoststed = document.getElementById("ServicePostalTown");
+    scPoststed.value = dataInput["poststed"];
 
-	var scModel = document.getElementById("ModelCode");
-	scModel.value = dataInput["model"];
+    var scEpost = document.getElementById("ServiceLocationEmail");
+    scEpost.value = dataInput["epost"];
 
-	var scSerial = document.getElementById("SerialNumber");
-	scSerial.value = dataInput["serial"];
+    var scModel = document.getElementById("ModelCode");
+    scModel.value = dataInput["model"];
 
-	var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
-	scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
+    var scSerial = document.getElementById("SerialNumber");
+    scSerial.value = dataInput["serial"];
+
+    var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
+    scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
 }
 
 var modelList = {
