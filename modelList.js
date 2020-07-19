@@ -1,4 +1,4 @@
-function geteXchangeModel(m, c) {
+var geteXchangeModel = function (m, c) {
     // m = modell
     // c = det som blir skrevet i "Revisjon" feltet i MAB
     // m og c skal alltid ha en verdi, fikses før denne fuksjonen blir kalt

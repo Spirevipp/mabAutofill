@@ -2,29 +2,20 @@ function fiksFormattering(s) {
 	// bytter ut alle feilformaterte æøå i input string s
 	var re = [/Ã¦/g, /Ã¸/g, /Ã¥/g, /Ã†/g, /Ã˜/g, /Ã…/g, /Ã¶/g, /Ã¤/g, /Ã©/g];
 	var rep = ["æ", "ø", "å", "Æ", "Ø", "Å", "ö", "ä", "é"];
-	console.log(s);
+	//console.log(s);
 	for (var i = 0; i < re.length; i++) {
 		//regex match alle formater i re array og bytt ut med bokstav på tilsvarende posisjon i rep array
 		var prevS = s;
 		s = s.replace(re[i], rep[i]);
+		/*
 		if (prevS != s) {
 			console.log(re[i], rep[i]);
 			console.log(s);
 		}
+		*/
 	}
 	return s;
 }
-/*
-var loadJS = function (url, implementationCode, location) {
-    var scriptTag = document.createElement('script');
-    scriptTag.src = url;
-
-    scriptTag.onload = implementationCode;
-    scriptTag.onreadystatechange = implementationCode;
-
-    location.appendChild(scriptTag);
-};
-*/
 
 function mabAutofill() {
 
@@ -258,7 +249,6 @@ var autofilleXchange = function (d) {
 	var scEpost = document.getElementById("ServiceLocationEmail");
 	scEpost.value = dataInput["epost"];
 
-	
 	var scModel = document.getElementById("ModelCode");
 	scModel.value = dataInput["model"];
 
