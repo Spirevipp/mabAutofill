@@ -9,6 +9,60 @@ var geteXchangeModel = function (m, c) {
     return correctModel;
 }
 
+var autofilleXchange = function (d) {
+	var dataInput = d;
+	if (dataInput["rev"] == "") {
+		dataInput["rev"] = "Default";
+	};
+	dataInput["model"] = geteXchangeModel(dataInput["model"], dataInput["rev"]);
+	
+
+
+	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
+
+	/*
+	scServicenummer = document.getElementById("OrderNumber");
+	scServicenummer.value = mabData["servicenummer"];
+
+	var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
+	scMerke.value = 133;
+
+	// produktgruppe, skal lage noen predefined oversettelser fra mab
+	// var scProduktgruppe = document.getElementById("sObjectNameSinet");
+	//var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
+
+	var scLeverandør = document.getElementById("sSupplierSinet"); //(Sony norge er value 2247)
+	scLeverandør = 2247;
+	*/
+
+	var scNavn = document.getElementById("ServiceOwner");
+	scNavn.value = dataInput["fornavn"] + " " + dataInput["etternavn"];
+
+	var scTlf = document.getElementById("ServiceLocationPhone");
+	scTlf.value = dataInput["tlf"];
+
+	var scAdresse = document.getElementById("ServiceAddress");
+	scAdresse.value = dataInput["adresse"];
+
+	var scPostnummer = document.getElementById("ServicePostalCode");
+	scPostnummer.value = dataInput["postnummer"];
+
+	var scPoststed = document.getElementById("ServicePostalTown");
+	scPoststed.value = dataInput["poststed"];
+
+	var scEpost = document.getElementById("ServiceLocationEmail");
+	scEpost.value = dataInput["epost"];
+
+	var scModel = document.getElementById("ModelCode");
+	scModel.value = dataInput["model"];
+
+	var scSerial = document.getElementById("SerialNumber");
+	scSerial.value = dataInput["serial"];
+
+	var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
+	scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
+}
+
 var modelList = {
     // Hodetelefoner
     WH1000XM3: {

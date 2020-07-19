@@ -38,12 +38,16 @@ function mabAutofill() {
 
 
 	if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
-		window.top.loadJS('https://spirevipp.github.io/mabAutofill/modelList.js', window.top.autofilleXchange(mabData), document.body);
+		window.top.loadJS('https://spirevipp.github.io/mabAutofill/eXchange.js', autofilleXchange(mabData), document.body);
 	} else if (currentURL == "https://3cgui.sony.eu/serviceportal/#/create-service-event-2") {
 		autofill3C(mabData);
 	} else {
 		alert("Ugyldig nettside, funker kun i 3cgui service registrering og eXchange registrering");
 	}
+}
+
+var runeXchange = function (d) {
+    autofilleXchange(d);
 }
 
 // MAB -> 3C spesifikke ting
@@ -202,59 +206,4 @@ var autofill3C = function (d) {
 
 	var scFeilbeskrivelse = document.querySelectorAll("textarea");
 	scFeilbeskrivelse[0].value = dataInput["feilbeskrivelse"];
-}
-
-// eXchange spesifikk
-var autofilleXchange = function (d) {
-	var dataInput = d;
-	if (dataInput["rev"] == "") {
-		dataInput["rev"] = "Default";
-	};
-	dataInput["model"] = window.top.geteXchangeModel(dataInput["model"], dataInput["rev"]);
-	
-
-
-	//funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
-
-	/*
-	scServicenummer = document.getElementById("OrderNumber");
-	scServicenummer.value = mabData["servicenummer"];
-
-	var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
-	scMerke.value = 133;
-
-	// produktgruppe, skal lage noen predefined oversettelser fra mab
-	// var scProduktgruppe = document.getElementById("sObjectNameSinet");
-	//var scUnderProduktgruppe = document.getElementById("sSubObjectNameSinet");
-
-	var scLeverandør = document.getElementById("sSupplierSinet"); //(Sony norge er value 2247)
-	scLeverandør = 2247;
-	*/
-
-	var scNavn = document.getElementById("ServiceOwner");
-	scNavn.value = dataInput["fornavn"] + " " + dataInput["etternavn"];
-
-	var scTlf = document.getElementById("ServiceLocationPhone");
-	scTlf.value = dataInput["tlf"];
-
-	var scAdresse = document.getElementById("ServiceAddress");
-	scAdresse.value = dataInput["adresse"];
-
-	var scPostnummer = document.getElementById("ServicePostalCode");
-	scPostnummer.value = dataInput["postnummer"];
-
-	var scPoststed = document.getElementById("ServicePostalTown");
-	scPoststed.value = dataInput["poststed"];
-
-	var scEpost = document.getElementById("ServiceLocationEmail");
-	scEpost.value = dataInput["epost"];
-
-	var scModel = document.getElementById("ModelCode");
-	scModel.value = dataInput["model"];
-
-	var scSerial = document.getElementById("SerialNumber");
-	scSerial.value = dataInput["serial"];
-
-	var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
-	scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
 }
