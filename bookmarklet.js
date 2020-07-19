@@ -14,8 +14,8 @@ var run3C = function () {
 var runeXchange = function () {
     mabAutofill();
 }
-var currURL = document.URL;
-if (currURL != "https://spirevipp.github.io/mabAutofill/") {
+var currentURL = document.URL;
+if (currentURL != "https://spirevipp.github.io/mabAutofill/") {
 
     if (currentURL == "https://exchange.serviceinfo.se/store_reg_neworder.asp") {
         loadJS('https://spirevipp.github.io/mabAutofill/eXchange.js', runeXchange, document.body);
