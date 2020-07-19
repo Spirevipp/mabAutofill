@@ -52,10 +52,11 @@ var autofilleXchange = function (d) {
 
     //funker ikke as is, flere felter må fylles ut og "submittes" før andre dukker opp
 
-    /*
+    
     scServicenummer = document.getElementById("OrderNumber");
-    scServicenummer.value = mabData["servicenummer"];
+    scServicenummer.value = dataInput["servicenummer"];
 
+    /*
     var scMerke = document.getElementById("sMakeNameSinet"); //(Sony er value 133)
     scMerke.value = 133;
 
@@ -88,11 +89,21 @@ var autofilleXchange = function (d) {
     var scModel = document.getElementById("ModelCode");
     scModel.value = dataInput["model"];
 
+    var scLokasjon = document.getElementById("PhysicalLocation");
+    scLokasjon.value = "3"; // sett lokasjon til hos verksted
+
     var scSerial = document.getElementById("SerialNumber");
     scSerial.value = dataInput["serial"];
 
     var scFeilbeskrivelse = document.getElementById("CustFaultDescription");
     scFeilbeskrivelse.value = dataInput["feilbeskrivelse"];
+
+    var scSolgtav = document.getElementById("SoldBy");
+    scSolgtav.value = "Power";
+
+    var scSign = document.getElementById("CheckedBy");
+    scSign.value = "SK";
+    
 }
 
 var modelList = {
