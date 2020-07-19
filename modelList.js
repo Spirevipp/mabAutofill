@@ -1,3 +1,5 @@
+console.log("hello world!");
+
 var geteXchangeModel = function (m, c) {
     // m = modell
     // c = det som blir skrevet i "Revisjon" feltet i MAB
