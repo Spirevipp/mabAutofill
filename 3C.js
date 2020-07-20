@@ -29,7 +29,7 @@ function mabAutofill() {
 		mabData[tempObj[i][0]] = fiksFormattering(tempObj[i][1]);
 	}
 
-	autofilleXchange(mabData);
+	autofill3C(mabData);
 }
 
 // MAB -> 3C spesifikke ting
