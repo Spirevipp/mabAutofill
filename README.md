@@ -6,7 +6,7 @@ https://spirevipp.github.io/mabAutofill/
 
 Gå til denne siden og dra linken til bokmerkelinjen.
 
-Når du er på 3c serviceregistrering eller eXchange registrering så trykker du på bokmerket.
+Når du er på 3c serviceregistrering, logiq registreing eller eXchange registrering så trykker du på bokmerket.
 
 Da får du opp en popup.
 
